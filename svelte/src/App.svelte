@@ -1,18 +1,17 @@
 
 <script lang="ts">
-	let questions:Question[] = [];
 	import ioClient from 'socket.io-client';
-    import type Question from './lib/implement';
+    import type QuestionObject from './lib/implement';
+	let questions:QuestionObject[] = [];
 	const ENDPOINT = "http://localhost:3000";
 	const io = ioClient(ENDPOINT);
 
 	function submit(value:string){
-		io.emit('submit',value);
+		io.emit('submit',{name:"test",content:value});
 	}
 
-	io.on('addQuestion',(value)=>{
+	io.on('addQuestion',(value:QuestionObject)=>{
 		questions = [...questions, value];
-		console.log(questions);
 	});
 
 </script>
@@ -27,9 +26,14 @@
 		</div>
 	</div>
 	<input type="text" on:keydown={(e)=>{if(e.key === "Enter"){submit(e.currentTarget.value)}}}>
-	{#each questions as message}
-		<div>{message}</div>
+	{#each questions as question}
+		<div class="question">
+			<h1 class="Qtitle">{question.name}</h1>
+			<p class="Qcontent">{question.content}</p>
+			<button>This is a button</button>
+		</div>
 	{/each}
+	<div class="footer"></div>
 </main>
 <style lang="css">
 	* {
@@ -59,5 +63,8 @@
 	#searchInput {
 		vertical-align: bottom;
 		width: 100%;
+	}
+	.question {
+		text-align: center;
 	}
 </style>
