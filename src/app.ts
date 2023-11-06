@@ -1,16 +1,15 @@
 import express from 'express';
 import http from 'http';
-import fs from 'fs';
 import path from 'path';
-import cors from  'cors';
+// import cors from  'cors';
 
 import socket from 'socket.io';
+import * as QuestionDB from './questionDB';
 
 const port = 3000;
 const app = express();
 const server = http.createServer(app);
 const io = new socket.Server(server);
-
 server.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}/`);
 });
@@ -46,4 +45,10 @@ io.sockets.on("connection", (socket) => {
         io.sockets.emit("addQuestion",value);
     });
     console.log("New client connected");
+    if(QuestionDB.data.length !== 0){
+        QuestionDB.data.forEach(question => {
+            
+        });
+        //@todo 미리 db에 있던 질문 생성
+    }
 });

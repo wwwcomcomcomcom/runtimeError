@@ -6,8 +6,14 @@
 	const ENDPOINT = "http://localhost:3000";
 	const io = ioClient(ENDPOINT);
 
-	function submit(value:string){
-		io.emit('submit',{name:"test",content:value});
+	function submit(){
+		const titleElement = document.getElementById("inputTitle") as HTMLInputElement;
+		const contentElement = document.getElementById("inputQuestion") as HTMLInputElement;
+		const title = titleElement.value;
+		const content = contentElement.value;
+		io.emit('submit',{title:title,content:content});
+		titleElement.value ="";
+		contentElement.value = "";
 	}
 
 	io.on('addQuestion',(value:QuestionObject)=>{
@@ -25,12 +31,16 @@
 			</div>
 		</div>
 	</div>
-	<input type="text" on:keydown={(e)=>{if(e.key === "Enter"){submit(e.currentTarget.value)}}}>
+	<div class="inputBox">
+		<input id="inputTitle" type="text">
+		<input id="inputQuestion" type="text">
+		<button on:click={submit}>질문하기</button>
+	</div>
 	{#each questions as question}
 		<div class="question">
-			<h1 class="Qtitle">{question.name}</h1>
+			<h1 class="Qtitle">{question.title}</h1>
 			<p class="Qcontent">{question.content}</p>
-			<button>This is a button</button>
+			<input type="text" placeholder="답변">
 		</div>
 	{/each}
 	<div class="footer"></div>
