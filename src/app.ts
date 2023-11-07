@@ -5,6 +5,7 @@ import path from 'path';
 
 import socket from 'socket.io';
 import * as QuestionDB from './questionDB';
+import QuestionObject, { randomString } from './utils';
 
 const port = 3000;
 const app = express();
@@ -18,16 +19,6 @@ app.use(express.static(path.join(__dirname, '..', 'svelte', 'public')));
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '..','svelte', 'public', 'index.html'));
-    // fs.readFile("./svelte/public/index.html", function (err,data){
-    //     if(err) {
-    //         res.send(err);
-    //         throw err;
-    //     }else{
-    //         res.writeHead(200, { 'Content-Type': 'text/html'});
-    //         res.write(data);
-    //         res.end();
-    //     }
-    // });
 });
 
 app.get('/get/question', function (req, res) {
@@ -37,17 +28,23 @@ app.get('/get/question', function (req, res) {
     res.end();
 });
 
+function addQuestion(quesetion:QuestionObject){
+    io.sockets.emit("addQuestion",quesetion);
+    QuestionDB.addQuestion(quesetion);
+}
+
 io.sockets.on("connection", (socket) => {
     socket.on("disconnect", () => {
         console.log("Socket disconnected");
     });
     socket.on("submit",(value)=>{
-        io.sockets.emit("addQuestion",value);
+        value.id = randomString(5);
+        addQuestion(value);
     });
     console.log("New client connected");
     if(QuestionDB.data.length !== 0){
         QuestionDB.data.forEach(question => {
-            
+            socket.emit("addQuestion",question);
         });
         //@todo 미리 db에 있던 질문 생성
     }

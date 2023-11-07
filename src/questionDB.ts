@@ -35,3 +35,7 @@ export function getQuestionById(id:string):QuestionObject | undefined {
 export function getAllQuestions(){
     return data
 }
+
+function onChangeDB(){
+    // asdf
+}

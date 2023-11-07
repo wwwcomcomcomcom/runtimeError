@@ -2,7 +2,6 @@ export default interface QuestionObject {
     id: string;
     title: string;
     content: string;
-    writer: string;
 }
 
 export function randomString(length: number): string{
