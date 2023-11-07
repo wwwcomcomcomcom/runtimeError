@@ -2,6 +2,7 @@
 <script lang="ts">
 	import ioClient from 'socket.io-client';
     import type QuestionObject from './lib/implement';
+    import LikeButton from './lib/LikeButton.svelte';
 	let questions:QuestionObject[] = [];
 	const ENDPOINT = "http://localhost:3000";
 	const io = ioClient(ENDPOINT);
@@ -16,8 +17,24 @@
 		contentElement.value = "";
 	}
 
+	function removeAll(){
+		io.emit('removeAll');
+	}
+
 	io.on('addQuestion',(value:QuestionObject)=>{
 		questions = [...questions, value];
+	});
+
+	io.on('removeQuestion',(id:string)=>{
+		document.getElementById(id).remove();
+	});
+
+	io.on('removeAllQuestion',()=>{
+		const questions = document.getElementsByClassName('question');
+		for (let i = 0; i < questions.length; i++) {
+			const element = questions.item(i);
+			element.remove();
+		}
 	});
 
 </script>
@@ -35,11 +52,13 @@
 		<input id="inputTitle" type="text">
 		<input id="inputQuestion" type="text">
 		<button on:click={submit}>질문하기</button>
+		<button on:click={removeAll}>Remove All</button>
 	</div>
 	{#each questions as question}
-		<div class="question">
+		<div class="question" id={question.id}>
 			<h1 class="Qtitle">{question.title}</h1>
 			<p class="Qcontent">{question.content}</p>
+			<LikeButton></LikeButton>
 			<input type="text" placeholder="답변">
 		</div>
 	{/each}
