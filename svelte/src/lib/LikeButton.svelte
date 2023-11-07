@@ -1,326 +1,58 @@
-<script>
-    let b = document.querySelector("button");
-    setTimeout(() => b.focus(), 100);
-    setTimeout(() => b.blur(), 1000);
+<script lang="ts">
+    let icon = document.querySelector(".ionicon");
+    let icons = document.getElementsByClassName("ion-icon")
+    console.log(icon);
+    // icon.onclick = function () {
+    //     icon.classList.toggle("active");
+    // }
 </script>
 
-<button class="like-button">
-    <div class="like-wrapper">
-        <div class="ripple" />
-        <svg class="heart" width="24" height="24" viewBox="0 0 24 24">
-            <path
-                d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"
-            />
-        </svg>
-        <div class="particles" style="--total-particles: 6">
-            <div class="particle" style="--i: 1; --color: #7642F0" />
-            <div class="particle" style="--i: 2; --color: #AFD27F" />
-            <div class="particle" style="--i: 3; --color: #DE8F4F" />
-            <div class="particle" style="--i: 4; --color: #D0516B" />
-            <div class="particle" style="--i: 5; --color: #5686F2" />
-            <div class="particle" style="--i: 6; --color: #D53EF3" />
-        </div>
-    </div>
-</button>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="10px"
+    height="10px"
+    class="ion-icon"
+    viewBox="0 0 512 512"
+    ><path
+        d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="32"
+    />
+    <div class="red-bg" />
+</svg>
 
 <style>
-    *,
-    *:before,
-    *:after {
+    .large-font {
+        font-size: xxx-large;
+    }
+    .top-20 {
         position: relative;
-        box-sizing: border-box;
+        top: 20vh;
     }
-
-    :root {
-        --color-bg: #fdf1f2;
-        --color-heart: #ea442b;
-        --easing: cubic-bezier(0.7, 0, 0.3, 1);
-        --duration: 0.5s;
+    .ion-icon.active {
+        animation: like 0.5s 1;
+        fill: red;
+        stroke: none;
     }
-
-    /* html,
-    body {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-    } */
-
-    .like-button {
-        font-size: 35vmin;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        border: none;
-        border-radius: 50%;
-        background: white;
-        width: 0.1em;
-        height: 0.1em;
-        padding: 0;
-        margin: 0;
-        outline: none;
-        z-index: 2;
-        -webkit-transition: -webkit-transform var(--duration) var(--easing);
-        transition: -webkit-transform var(--duration) var(--easing);
-        transition: transform var(--duration) var(--easing);
-        transition: transform var(--duration) var(--easing),
-            -webkit-transform var(--duration) var(--easing);
-        cursor: pointer;
-    }
-    .like-button:before {
-        z-index: -1;
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        box-shadow: 0 0.03em 0.06em rgba(0, 0, 0, 0.3);
-        border-radius: inherit;
-        -webkit-transition: inherit;
-        transition: inherit;
-    }
-    .like-button:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #fff;
-        border-radius: inherit;
-        z-index: -1;
-    }
-    .like-button:active:before {
-        -webkit-animation: depress-shadow var(--duration) var(--easing) both;
-        animation: depress-shadow var(--duration) var(--easing) both;
-    }
-    .like-button:focus:after {
-        -webkit-animation: depress var(--duration) var(--easing) both;
-        animation: depress var(--duration) var(--easing) both;
-    }
-    @-webkit-keyframes depress {
-        from,
-        to {
-            -webkit-transform: none;
-            transform: none;
-        }
-        50% {
-            -webkit-transform: translateY(5%) scale(0.9);
-            transform: translateY(5%) scale(0.9);
-        }
-    }
-    @keyframes depress {
-        from,
-        to {
-            -webkit-transform: none;
-            transform: none;
-        }
-        50% {
-            -webkit-transform: translateY(5%) scale(0.9);
-            transform: translateY(5%) scale(0.9);
-        }
-    }
-    @-webkit-keyframes depress-shadow {
-        from,
-        to {
-            -webkit-transform: none;
-            transform: none;
-        }
-        50% {
-            -webkit-transform: scale(0.5);
-            transform: scale(0.5);
-        }
-    }
-    @keyframes depress-shadow {
-        from,
-        to {
-            -webkit-transform: none;
-            transform: none;
-        }
-        50% {
-            -webkit-transform: scale(0.5);
-            transform: scale(0.5);
-        }
-    }
-    .like-wrapper {
-        display: grid;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        justify-content: center;
-        z-index: 1;
-    }
-    .like-wrapper > * {
-        margin: auto;
-        grid-area: 1 / 1;
-    }
-
-    .heart {
-        width: 0.05em;
-        height: 0.05em;
-        display: block;
-        -webkit-transform-origin: center 80%;
-        transform-origin: center 80%;
-    }
-    .heart > path {
-        stroke: var(--color-heart);
-        stroke-width: 2;
+    .ion-icon {
         fill: transparent;
-        -webkit-transition: fill var(--duration) var(--easing);
-        transition: fill var(--duration) var(--easing);
-    }
-    .like-button:focus .heart > path {
-        fill: var(--color-heart);
-    }
-    .like-button:focus .heart {
-        -webkit-animation: heart-bounce var(--duration) var(--easing);
-        animation: heart-bounce var(--duration) var(--easing);
-    }
-    @-webkit-keyframes heart-bounce {
-        40% {
-            -webkit-transform: scale(0.7);
-            transform: scale(0.7);
-        }
-        0%,
-        80%,
-        100% {
-            -webkit-transform: scale(1);
-            transform: scale(1);
-        }
-    }
-    @keyframes heart-bounce {
-        40% {
-            -webkit-transform: scale(0.7);
-            transform: scale(0.7);
-        }
-        0%,
-        80%,
-        100% {
-            -webkit-transform: scale(1);
-            transform: scale(1);
-        }
-    }
-    /* Added wrapper to prevent layout jank with resizing particles */
-    .particles {
-        width: 1px;
-        height: 1px;
+        stroke: black;
+        stroke-width: 30;
+        transition: all 0.5s;
     }
 
-    .particle {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 0.01em;
-        width: 0.01em;
-        border-radius: 0.005em;
-        background-color: var(--color);
-        --percentage: calc(var(--i) / var(--total-particles));
-        --Θ: calc(var(--percentage) * 1turn);
-        -webkit-transform: translate(-50%, -50%) rotate(var(--Θ)) translateY(0)
-            scaleY(0);
-        transform: translate(-50%, -50%) rotate(var(--Θ)) translateY(0)
-            scaleY(0);
-        -webkit-transition: all var(--duration) var(--easing);
-        transition: all var(--duration) var(--easing);
-    }
-    .like-button:focus .particle {
-        -webkit-animation: particles-out calc(var(--duration) * 1.2)
-            var(--easing) forwards;
-        animation: particles-out calc(var(--duration) * 1.2) var(--easing)
-            forwards;
-    }
-    @-webkit-keyframes particles-out {
-        50% {
-            height: 0.03em;
+    @-webkit-keyframes like {
+        0% {
+            transform: scale(1);
         }
-        50%,
-        60% {
-            height: 0.03em;
-            -webkit-transform: translate(-50%, -50%) rotate(var(--Θ))
-                translateY(0.08em) scale(1);
-            transform: translate(-50%, -50%) rotate(var(--Θ)) translateY(0.08em)
-                scale(1);
-        }
-        60% {
-            height: 0.02em;
+        90% {
+            transform: scale(1.2);
         }
         100% {
-            -webkit-transform: translate(-50%, -50%) rotate(var(--Θ))
-                translateY(0.1em) scale(0);
-            transform: translate(-50%, -50%) rotate(var(--Θ)) translateY(0.1em)
-                scale(0);
+            transform: scale(1.1);
         }
-    }
-    @keyframes particles-out {
-        50% {
-            height: 0.03em;
-        }
-        50%,
-        60% {
-            height: 0.03em;
-            -webkit-transform: translate(-50%, -50%) rotate(var(--Θ))
-                translateY(0.08em) scale(1);
-            transform: translate(-50%, -50%) rotate(var(--Θ)) translateY(0.08em)
-                scale(1);
-        }
-        60% {
-            height: 0.02em;
-        }
-        100% {
-            -webkit-transform: translate(-50%, -50%) rotate(var(--Θ))
-                translateY(0.1em) scale(0);
-            transform: translate(-50%, -50%) rotate(var(--Θ)) translateY(0.1em)
-                scale(0);
-        }
-    }
-    .ripple {
-        height: 0.01em;
-        width: 0.01em;
-        border-radius: 50%;
-        overflow: hidden;
-        z-index: 1;
-    }
-    .ripple:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0.4em solid var(--color-heart);
-        border-radius: inherit;
-        -webkit-transform: scale(0);
-        transform: scale(0);
-    }
-    .like-button:focus .ripple:before {
-        -webkit-animation: ripple-out var(--duration) var(--easing);
-        animation: ripple-out var(--duration) var(--easing);
-    }
-    @-webkit-keyframes ripple-out {
-        from {
-            -webkit-transform: scale(0);
-            transform: scale(0);
-        }
-        to {
-            -webkit-transform: scale(5);
-            transform: scale(5);
-        }
-    }
-    @keyframes ripple-out {
-        from {
-            -webkit-transform: scale(0);
-            transform: scale(0);
-        }
-        to {
-            -webkit-transform: scale(5);
-            transform: scale(5);
-        }
-    }
-    /* Reset the animation when clicking again! */
-    .like-button:focus {
-        pointer-events: none;
-        cursor: normal;
     }
 </style>

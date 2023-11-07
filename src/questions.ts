@@ -4,7 +4,7 @@ import QuestionObject from './utils';
 const dbPath = path.join(__dirname, '..', 'db', 'questions.json');
 export let data:QuestionObject[] = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
 
-export function save(){
+function save(){
     fs.writeFileSync(dbPath,JSON.stringify(data));
 }
 // setInterval(save,10000);

@@ -4,7 +4,7 @@ import path from "path";
 // import cors from  'cors';
 
 import socket from "socket.io";
-import * as QuestionDB from "./questionDB";
+import * as QuestionDB from "./questions";
 import QuestionObject, { randomString } from "./utils";
 
 const port = 3000;
@@ -21,6 +21,7 @@ app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "svelte", "public", "index.html"));
 });
 
+
 app.get("/get/question", function (req, res) {
     //url params
     // console.log(req.query)
@@ -33,27 +34,38 @@ function addQuestion(quesetion: QuestionObject) {
     QuestionDB.addQuestion(quesetion);
 }
 
-function removeAll(){
+function removeAllQuestion(){
     io.sockets.emit("removeAllQuestion");
     QuestionDB.removeAllQuestions();
 }
 
 io.sockets.on("connection", (socket) => {
+
     console.log("\nNew client connected");
+
+    //for debugging
     socket.on("disconnect", () => {
         console.log("Socket disconnected");
     });
-    socket.on("submit", (value) => {
-        value.id = randomString(5);
-        addQuestion(value);
-    });
-    socket.on("removeAll",()=>{
-        removeAll();
-    });
+
+    /**db에 미리 있던 질문생성 */
     if (QuestionDB.data.length !== 0) {
         QuestionDB.data.forEach((question) => {
             socket.emit("addQuestion", question);
         });
-        //@todo 미리 db에 있던 질문 생성
     }
+
+    /**get uuid for auto login */
+    socket.once("handshake", (uuid)=>{
+        console.log(uuid);
+    });
+    /**get add question requestion */
+    socket.on("addQuestion", (value) => {
+        value.id = randomString(5);
+        addQuestion(value);
+    });
+    socket.on("removeAllQuestion",()=>{
+        removeAllQuestion();
+    });
+    
 });
