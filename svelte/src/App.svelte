@@ -2,10 +2,15 @@
     import ioClient from "socket.io-client";
     import type QuestionObject from "./lib/utils.ts";
     import LikeButton from "./lib/LikeButton.svelte";
+    // @ts-ignore
     import { randomString } from "./lib/utils.ts";
-    let questions: QuestionObject[] = [];
+    import Router from "svelte-spa-router";
     const ENDPOINT = "http://localhost:3000";
     const io = ioClient(ENDPOINT);
+    const routes = {
+        
+    }
+    let questions: QuestionObject[] = [];
 
     /** random uuid for new browser
      * @default "Unknown"
@@ -85,6 +90,7 @@
             <input type="text" placeholder="답변" />
         </div>
     {/each}
+    <Router></Router>
     <div class="footer" />
 </main>
 

@@ -1,14 +1,14 @@
 <script lang="ts">
-    // function onLoad(){
-    //     let icons = document.getElementsByClassName("ion-icon");
-    //     for (let i = 0; i < icons.length; i++) {
-    //         const icon = icons.item(i) as HTMLDivElement;
-    //         icon.onclick = function () {
-    //             icon.classList.toggle("active");
-    //         }
-    //     }
+    function onLoad(){
+        let icons = document.getElementsByClassName("ion-icon");
+        for (let i = 0; i < icons.length; i++) {
+            const icon = icons.item(i) as HTMLDivElement;
+            icon.onclick = function () {
+                icon.classList.toggle("active");
+            }
+        }
         
-    // }
+    }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -36,7 +36,7 @@
 <style>
     .active {
         animation: like 0.5s 1;
-        fill: red;
+        stroke: red;
         stroke: none;
     }
     .likeBtn {
@@ -44,6 +44,13 @@
         stroke: black;
         stroke-width: 30;
         transition: all 0.5s;
+    }
+
+    .red-bg {
+        background-color: red;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
     }
 
     @keyframes like {
@@ -56,7 +63,6 @@
         }
         100% {
             transform: scale(1.1);
-            fill: red;
         }
     }
 </style>
