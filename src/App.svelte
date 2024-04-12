@@ -90,7 +90,7 @@
             <input type="text" placeholder="답변" />
         </div>
     {/each}
-    <Router></Router>
+<!--    <Router></Router>-->
     <div class="footer" />
 </main>
 
